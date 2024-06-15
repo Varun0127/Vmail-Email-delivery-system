@@ -1,0 +1,87 @@
+user table
+
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    gender ENUM('Male', 'Female'),
+    date_of_birth DATE,
+    country VARCHAR(255),
+    username VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    created_at DATETIME DEFAULT NULL,
+    updated_at DATETIME DEFAULT NULL
+);
+
+DELIMITER //
+
+CREATE TRIGGER tr_users_before_insert
+BEFORE INSERT ON Users
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END;
+//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+emails table
+
+CREATE TABLE Emails (
+    email_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    sender_id VARCHAR(255),
+    recipient_id VARCHAR(255),
+    subject VARCHAR(255),
+    message TEXT,
+    folder ENUM('drafts', 'sent', 'inbox', 'bin'),
+    status ENUM('unread', 'read'),
+    created_at DATETIME DEFAULT NULL,
+    updated_at DATETIME DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER tr_emails_before_insert
+BEFORE INSERT ON Emails
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END;
+//
+
+DELIMITER ;
+
+
+
+
+Bins Table
+
+CREATE TABLE bins (
+    bin_id INT AUTO_INCREMENT PRIMARY KEY,
+    email_id INT,
+    previous_folder ENUM('drafts', 'sent', 'inbox'),
+    deleted_at TIMESTAMP,
+    FOREIGN KEY (email_id) REFERENCES emails(email_id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER tr_bins_before_insert
+BEFORE INSERT ON bins
+FOR EACH ROW
+BEGIN
+    SET NEW.deleted_at = NOW();
+END;
+//

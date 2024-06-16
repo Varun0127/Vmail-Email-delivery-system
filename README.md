@@ -7,7 +7,11 @@ The system is built on a multi-tier architecture that includes a presentation la
 Key features of Vmail include:
 
 **User Authentication:** Secure login and registration system to protect user data and prevent unauthorized access.
+
 **Compose and Send Emails:** A rich text editor allows users to compose emails with attachments, enabling a versatile communication method.
+
 **Inbox Management:** Users can receive, read, and manage their emails, including functionalities to mark emails as read/unread, delete.
+
 **Search:** Advanced search options to help users find specific emails quickly.
+
 **Drafts and Sent Items:** Users can save drafts and review sent emails, ensuring they have a record of their communication.
